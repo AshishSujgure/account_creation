@@ -7,7 +7,7 @@ if [ -f ${PACKAGE_NAME} ]; then
     rm -f ${PACKAGE_NAME}
 fi
 
-pip3.93.93.93.93.93.93.93.93.9 install -r requirements.txt --target ./package
+pip install -r requirements.txt --target ./package
 cd package
 zip -r ../${PACKAGE_NAME} .
 cd ..
