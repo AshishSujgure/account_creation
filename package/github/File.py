@@ -1,94 +1,160 @@
-# WARNING: this file is generated automaticaly.
-# Do not modify it manually, your work would be lost.
+############################ Copyrights and license ############################
+#                                                                              #
+# Copyright 2012 Vincent Jacques <vincent@vincent-jacques.net>                 #
+# Copyright 2012 Zearin <zearin@gonk.net>                                      #
+# Copyright 2013 AKFish <akfish@gmail.com>                                     #
+# Copyright 2013 Vincent Jacques <vincent@vincent-jacques.net>                 #
+# Copyright 2014 Vincent Jacques <vincent@vincent-jacques.net>                 #
+# Copyright 2016 Jannis Gebauer <ja.geb@me.com>                                #
+# Copyright 2016 Jeffrey Melvin <jeffrey.melvin@workiva.com>                   #
+# Copyright 2016 Peter Buckley <dx-pbuckley@users.noreply.github.com>          #
+# Copyright 2017 Simon <spam@esemi.ru>                                         #
+# Copyright 2018 Wan Liuyang <tsfdye@gmail.com>                                #
+# Copyright 2018 sfdye <tsfdye@gmail.com>                                      #
+#                                                                              #
+# This file is part of PyGithub.                                               #
+# http://pygithub.readthedocs.io/                                              #
+#                                                                              #
+# PyGithub is free software: you can redistribute it and/or modify it under    #
+# the terms of the GNU Lesser General Public License as published by the Free  #
+# Software Foundation, either version 3 of the License, or (at your option)    #
+# any later version.                                                           #
+#                                                                              #
+# PyGithub is distributed in the hope that it will be useful, but WITHOUT ANY  #
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS    #
+# FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more #
+# details.                                                                     #
+#                                                                              #
+# You should have received a copy of the GNU Lesser General Public License     #
+# along with PyGithub. If not, see <http://www.gnu.org/licenses/>.             #
+#                                                                              #
+################################################################################
 
-# Copyright 2012 Vincent Jacques
-# vincent@vincent-jacques.net
+import github.GithubObject
 
-# This file is part of PyGithub. http://vincent-jacques.net/PyGithub
 
-# PyGithub is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License
-# as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+class File(github.GithubObject.NonCompletableGithubObject):
+    """
+    This class represents Files
+    """
 
-# PyGithub is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
-
-# You should have received a copy of the GNU Lesser General Public License along with PyGithub.  If not, see <http://www.gnu.org/licenses/>.
-
-import GithubObject
-
-class File( GithubObject.BasicGithubObject ):
-    @property
-    def additions( self ):
-        return self._NoneIfNotSet( self._additions )
-
-    @property
-    def blob_url( self ):
-        return self._NoneIfNotSet( self._blob_url )
-
-    @property
-    def changes( self ):
-        return self._NoneIfNotSet( self._changes )
-
-    @property
-    def deletions( self ):
-        return self._NoneIfNotSet( self._deletions )
-
-    @property
-    def filename( self ):
-        return self._NoneIfNotSet( self._filename )
-
-    @property
-    def patch( self ):
-        return self._NoneIfNotSet( self._patch )
-
-    @property
-    def raw_url( self ):
-        return self._NoneIfNotSet( self._raw_url )
+    def __repr__(self):
+        return self.get__repr__(
+            {"sha": self._sha.value, "filename": self._filename.value}
+        )
 
     @property
-    def sha( self ):
-        return self._NoneIfNotSet( self._sha )
+    def additions(self):
+        """
+        :type: integer
+        """
+        return self._additions.value
 
     @property
-    def status( self ):
-        return self._NoneIfNotSet( self._status )
+    def blob_url(self):
+        """
+        :type: string
+        """
+        return self._blob_url.value
 
-    def _initAttributes( self ):
-        self._additions = GithubObject.NotSet
-        self._blob_url = GithubObject.NotSet
-        self._changes = GithubObject.NotSet
-        self._deletions = GithubObject.NotSet
-        self._filename = GithubObject.NotSet
-        self._patch = GithubObject.NotSet
-        self._raw_url = GithubObject.NotSet
-        self._sha = GithubObject.NotSet
-        self._status = GithubObject.NotSet
+    @property
+    def changes(self):
+        """
+        :type: integer
+        """
+        return self._changes.value
 
-    def _useAttributes( self, attributes ):
-        if "additions" in attributes: # pragma no branch
-            assert attributes[ "additions" ] is None or isinstance( attributes[ "additions" ], int ), attributes[ "additions" ]
-            self._additions = attributes[ "additions" ]
-        if "blob_url" in attributes: # pragma no branch
-            assert attributes[ "blob_url" ] is None or isinstance( attributes[ "blob_url" ], ( str, unicode ) ), attributes[ "blob_url" ]
-            self._blob_url = attributes[ "blob_url" ]
-        if "changes" in attributes: # pragma no branch
-            assert attributes[ "changes" ] is None or isinstance( attributes[ "changes" ], int ), attributes[ "changes" ]
-            self._changes = attributes[ "changes" ]
-        if "deletions" in attributes: # pragma no branch
-            assert attributes[ "deletions" ] is None or isinstance( attributes[ "deletions" ], int ), attributes[ "deletions" ]
-            self._deletions = attributes[ "deletions" ]
-        if "filename" in attributes: # pragma no branch
-            assert attributes[ "filename" ] is None or isinstance( attributes[ "filename" ], ( str, unicode ) ), attributes[ "filename" ]
-            self._filename = attributes[ "filename" ]
-        if "patch" in attributes: # pragma no branch
-            assert attributes[ "patch" ] is None or isinstance( attributes[ "patch" ], ( str, unicode ) ), attributes[ "patch" ]
-            self._patch = attributes[ "patch" ]
-        if "raw_url" in attributes: # pragma no branch
-            assert attributes[ "raw_url" ] is None or isinstance( attributes[ "raw_url" ], ( str, unicode ) ), attributes[ "raw_url" ]
-            self._raw_url = attributes[ "raw_url" ]
-        if "sha" in attributes: # pragma no branch
-            assert attributes[ "sha" ] is None or isinstance( attributes[ "sha" ], ( str, unicode ) ), attributes[ "sha" ]
-            self._sha = attributes[ "sha" ]
-        if "status" in attributes: # pragma no branch
-            assert attributes[ "status" ] is None or isinstance( attributes[ "status" ], ( str, unicode ) ), attributes[ "status" ]
-            self._status = attributes[ "status" ]
+    @property
+    def contents_url(self):
+        """
+        :type: string
+        """
+        return self._contents_url.value
+
+    @property
+    def deletions(self):
+        """
+        :type: integer
+        """
+        return self._deletions.value
+
+    @property
+    def filename(self):
+        """
+        :type: string
+        """
+        return self._filename.value
+
+    @property
+    def patch(self):
+        """
+        :type: string
+        """
+        return self._patch.value
+
+    @property
+    def previous_filename(self):
+        """
+        :type: string
+        """
+        return self._previous_filename.value
+
+    @property
+    def raw_url(self):
+        """
+        :type: string
+        """
+        return self._raw_url.value
+
+    @property
+    def sha(self):
+        """
+        :type: string
+        """
+        return self._sha.value
+
+    @property
+    def status(self):
+        """
+        :type: string
+        """
+        return self._status.value
+
+    def _initAttributes(self):
+        self._additions = github.GithubObject.NotSet
+        self._blob_url = github.GithubObject.NotSet
+        self._changes = github.GithubObject.NotSet
+        self._contents_url = github.GithubObject.NotSet
+        self._deletions = github.GithubObject.NotSet
+        self._filename = github.GithubObject.NotSet
+        self._patch = github.GithubObject.NotSet
+        self._previous_filename = github.GithubObject.NotSet
+        self._raw_url = github.GithubObject.NotSet
+        self._sha = github.GithubObject.NotSet
+        self._status = github.GithubObject.NotSet
+
+    def _useAttributes(self, attributes):
+        if "additions" in attributes:  # pragma no branch
+            self._additions = self._makeIntAttribute(attributes["additions"])
+        if "blob_url" in attributes:  # pragma no branch
+            self._blob_url = self._makeStringAttribute(attributes["blob_url"])
+        if "changes" in attributes:  # pragma no branch
+            self._changes = self._makeIntAttribute(attributes["changes"])
+        if "contents_url" in attributes:  # pragma no branch
+            self._contents_url = self._makeStringAttribute(attributes["contents_url"])
+        if "deletions" in attributes:  # pragma no branch
+            self._deletions = self._makeIntAttribute(attributes["deletions"])
+        if "filename" in attributes:  # pragma no branch
+            self._filename = self._makeStringAttribute(attributes["filename"])
+        if "patch" in attributes:  # pragma no branch
+            self._patch = self._makeStringAttribute(attributes["patch"])
+        if "previous_filename" in attributes:  # pragma no branch
+            self._previous_filename = self._makeStringAttribute(
+                attributes["previous_filename"]
+            )
+        if "raw_url" in attributes:  # pragma no branch
+            self._raw_url = self._makeStringAttribute(attributes["raw_url"])
+        if "sha" in attributes:  # pragma no branch
+            self._sha = self._makeStringAttribute(attributes["sha"])
+        if "status" in attributes:  # pragma no branch
+            self._status = self._makeStringAttribute(attributes["status"])

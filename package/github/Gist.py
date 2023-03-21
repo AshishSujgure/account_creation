@@ -1,269 +1,380 @@
-# WARNING: this file is generated automaticaly.
-# Do not modify it manually, your work would be lost.
+############################ Copyrights and license ############################
+#                                                                              #
+# Copyright 2012 Steve English <steve.english@navetas.com>                     #
+# Copyright 2012 Vincent Jacques <vincent@vincent-jacques.net>                 #
+# Copyright 2012 Zearin <zearin@gonk.net>                                      #
+# Copyright 2013 AKFish <akfish@gmail.com>                                     #
+# Copyright 2013 Vincent Jacques <vincent@vincent-jacques.net>                 #
+# Copyright 2014 Dale Jung <dale@dalejung.com>                                 #
+# Copyright 2014 Vincent Jacques <vincent@vincent-jacques.net>                 #
+# Copyright 2016 Jannis Gebauer <ja.geb@me.com>                                #
+# Copyright 2016 Peter Buckley <dx-pbuckley@users.noreply.github.com>          #
+# Copyright 2018 Wan Liuyang <tsfdye@gmail.com>                                #
+# Copyright 2018 sfdye <tsfdye@gmail.com>                                      #
+# Copyright 2018 羽 <Just4test@users.noreply.github.com>                      #
+#                                                                              #
+# This file is part of PyGithub.                                               #
+# http://pygithub.readthedocs.io/                                              #
+#                                                                              #
+# PyGithub is free software: you can redistribute it and/or modify it under    #
+# the terms of the GNU Lesser General Public License as published by the Free  #
+# Software Foundation, either version 3 of the License, or (at your option)    #
+# any later version.                                                           #
+#                                                                              #
+# PyGithub is distributed in the hope that it will be useful, but WITHOUT ANY  #
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS    #
+# FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more #
+# details.                                                                     #
+#                                                                              #
+# You should have received a copy of the GNU Lesser General Public License     #
+# along with PyGithub. If not, see <http://www.gnu.org/licenses/>.             #
+#                                                                              #
+################################################################################
 
-# Copyright 2012 Vincent Jacques
-# vincent@vincent-jacques.net
+import github.GistComment
+import github.GistFile
+import github.GistHistoryState
+import github.GithubObject
+import github.NamedUser
+import github.PaginatedList
 
-# This file is part of PyGithub. http://vincent-jacques.net/PyGithub
 
-# PyGithub is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License
-# as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+class Gist(github.GithubObject.CompletableGithubObject):
+    """
+    This class represents Gists. The reference can be found here https://docs.github.com/en/rest/reference/gists
+    """
 
-# PyGithub is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
-
-# You should have received a copy of the GNU Lesser General Public License along with PyGithub.  If not, see <http://www.gnu.org/licenses/>.
-
-import GithubObject
-import PaginatedList
-
-import Gist
-import GistComment
-import NamedUser
-import GistFile
-import InputFileContent
-import GistHistoryState
-
-class Gist( GithubObject.GithubObject ):
-    @property
-    def comments( self ):
-        self._completeIfNotSet( self._comments )
-        return self._NoneIfNotSet( self._comments )
-
-    @property
-    def created_at( self ):
-        self._completeIfNotSet( self._created_at )
-        return self._NoneIfNotSet( self._created_at )
-
-    @property
-    def description( self ):
-        self._completeIfNotSet( self._description )
-        return self._NoneIfNotSet( self._description )
-
-    @property
-    def files( self ):
-        self._completeIfNotSet( self._files )
-        return self._NoneIfNotSet( self._files )
-
-    @property
-    def fork_of( self ):
-        self._completeIfNotSet( self._fork_of )
-        return self._NoneIfNotSet( self._fork_of )
+    def __repr__(self):
+        return self.get__repr__({"id": self._id.value})
 
     @property
-    def forks( self ):
-        self._completeIfNotSet( self._forks )
-        return self._NoneIfNotSet( self._forks )
+    def comments(self):
+        """
+        :type: integer
+        """
+        self._completeIfNotSet(self._comments)
+        return self._comments.value
 
     @property
-    def git_pull_url( self ):
-        self._completeIfNotSet( self._git_pull_url )
-        return self._NoneIfNotSet( self._git_pull_url )
+    def comments_url(self):
+        """
+        :type: string
+        """
+        self._completeIfNotSet(self._comments_url)
+        return self._comments_url.value
 
     @property
-    def git_push_url( self ):
-        self._completeIfNotSet( self._git_push_url )
-        return self._NoneIfNotSet( self._git_push_url )
+    def commits_url(self):
+        """
+        :type: string
+        """
+        self._completeIfNotSet(self._commits_url)
+        return self._commits_url.value
 
     @property
-    def history( self ):
-        self._completeIfNotSet( self._history )
-        return self._NoneIfNotSet( self._history )
+    def created_at(self):
+        """
+        :type: datetime.datetime
+        """
+        self._completeIfNotSet(self._created_at)
+        return self._created_at.value
 
     @property
-    def html_url( self ):
-        self._completeIfNotSet( self._html_url )
-        return self._NoneIfNotSet( self._html_url )
+    def description(self):
+        """
+        :type: string
+        """
+        self._completeIfNotSet(self._description)
+        return self._description.value
 
     @property
-    def id( self ):
-        self._completeIfNotSet( self._id )
-        return self._NoneIfNotSet( self._id )
+    def files(self):
+        """
+        :type: dict of string to :class:`github.GistFile.GistFile`
+        """
+        self._completeIfNeeded()
+        return self._files.value
 
     @property
-    def public( self ):
-        self._completeIfNotSet( self._public )
-        return self._NoneIfNotSet( self._public )
+    def fork_of(self):
+        """
+        :type: :class:`github.Gist.Gist`
+        """
+        self._completeIfNotSet(self._fork_of)
+        return self._fork_of.value
 
     @property
-    def updated_at( self ):
-        self._completeIfNotSet( self._updated_at )
-        return self._NoneIfNotSet( self._updated_at )
+    def forks(self):
+        """
+        :type: list of :class:`github.Gist.Gist`
+        """
+        self._completeIfNotSet(self._forks)
+        return self._forks.value
 
     @property
-    def url( self ):
-        self._completeIfNotSet( self._url )
-        return self._NoneIfNotSet( self._url )
+    def forks_url(self):
+        """
+        :type: string
+        """
+        self._completeIfNotSet(self._forks_url)
+        return self._forks_url.value
 
     @property
-    def user( self ):
-        self._completeIfNotSet( self._user )
-        return self._NoneIfNotSet( self._user )
+    def git_pull_url(self):
+        """
+        :type: string
+        """
+        self._completeIfNotSet(self._git_pull_url)
+        return self._git_pull_url.value
 
-    def create_comment( self, body ):
-        assert isinstance( body, ( str, unicode ) ), body
+    @property
+    def git_push_url(self):
+        """
+        :type: string
+        """
+        self._completeIfNotSet(self._git_push_url)
+        return self._git_push_url.value
+
+    @property
+    def history(self):
+        """
+        :type: list of :class:`github.GistHistoryState.GistHistoryState`
+        """
+        self._completeIfNotSet(self._history)
+        return self._history.value
+
+    @property
+    def html_url(self):
+        """
+        :type: string
+        """
+        self._completeIfNotSet(self._html_url)
+        return self._html_url.value
+
+    @property
+    def id(self):
+        """
+        :type: string
+        """
+        self._completeIfNotSet(self._id)
+        return self._id.value
+
+    @property
+    def owner(self):
+        """
+        :type: :class:`github.NamedUser.NamedUser`
+        """
+        self._completeIfNotSet(self._owner)
+        return self._owner.value
+
+    @property
+    def public(self):
+        """
+        :type: bool
+        """
+        self._completeIfNotSet(self._public)
+        return self._public.value
+
+    @property
+    def updated_at(self):
+        """
+        :type: datetime.datetime
+        """
+        self._completeIfNotSet(self._updated_at)
+        return self._updated_at.value
+
+    @property
+    def url(self):
+        """
+        :type: string
+        """
+        self._completeIfNotSet(self._url)
+        return self._url.value
+
+    @property
+    def user(self):
+        """
+        :type: :class:`github.NamedUser.NamedUser`
+        """
+        self._completeIfNotSet(self._user)
+        return self._user.value
+
+    def create_comment(self, body):
+        """
+        :calls: `POST /gists/{gist_id}/comments <https://docs.github.com/en/rest/reference/gists#comments>`_
+        :param body: string
+        :rtype: :class:`github.GistComment.GistComment`
+        """
+        assert isinstance(body, str), body
         post_parameters = {
             "body": body,
         }
-        headers, data = self._requester.requestAndCheck(
-            "POST",
-            self.url + "/comments",
-            None,
-            post_parameters
+        headers, data = self._requester.requestJsonAndCheck(
+            "POST", f"{self.url}/comments", input=post_parameters
         )
-        return GistComment.GistComment( self._requester, data, completed = True )
-
-    def create_fork( self ):
-        headers, data = self._requester.requestAndCheck(
-            "POST",
-            self.url + "/fork",
-            None,
-            None
-        )
-        return Gist( self._requester, data, completed = True )
-
-    def delete( self ):
-        headers, data = self._requester.requestAndCheck(
-            "DELETE",
-            self.url,
-            None,
-            None
+        return github.GistComment.GistComment(
+            self._requester, headers, data, completed=True
         )
 
-    def edit( self, description = GithubObject.NotSet, files = GithubObject.NotSet ):
-        assert description is GithubObject.NotSet or isinstance( description, ( str, unicode ) ), description
-        assert files is GithubObject.NotSet or all( isinstance( element, InputFileContent.InputFileContent ) for element in files.itervalues() ), files
+    def create_fork(self):
+        """
+        :calls: `POST /gists/{id}/forks <https://docs.github.com/en/rest/reference/gists>`_
+        :rtype: :class:`github.Gist.Gist`
+        """
+        headers, data = self._requester.requestJsonAndCheck("POST", f"{self.url}/forks")
+        return Gist(self._requester, headers, data, completed=True)
+
+    def delete(self):
+        """
+        :calls: `DELETE /gists/{id} <https://docs.github.com/en/rest/reference/gists>`_
+        :rtype: None
+        """
+        headers, data = self._requester.requestJsonAndCheck("DELETE", self.url)
+
+    def edit(
+        self, description=github.GithubObject.NotSet, files=github.GithubObject.NotSet
+    ):
+        """
+        :calls: `PATCH /gists/{id} <https://docs.github.com/en/rest/reference/gists>`_
+        :param description: string
+        :param files: dict of string to :class:`github.InputFileContent.InputFileContent`
+        :rtype: None
+        """
+        assert description is github.GithubObject.NotSet or isinstance(
+            description, str
+        ), description
+        assert files is github.GithubObject.NotSet or all(
+            element is None or isinstance(element, github.InputFileContent)
+            for element in files.values()
+        ), files
         post_parameters = dict()
-        if description is not GithubObject.NotSet:
-            post_parameters[ "description" ] = description
-        if files is not GithubObject.NotSet:
-            post_parameters[ "files" ] = dict( ( key, value._identity ) for key, value in files.iteritems() )
-        headers, data = self._requester.requestAndCheck(
-            "PATCH",
-            self.url,
-            None,
-            post_parameters
+        if description is not github.GithubObject.NotSet:
+            post_parameters["description"] = description
+        if files is not github.GithubObject.NotSet:
+            post_parameters["files"] = {
+                key: None if value is None else value._identity
+                for key, value in files.items()
+            }
+        headers, data = self._requester.requestJsonAndCheck(
+            "PATCH", self.url, input=post_parameters
         )
-        self._useAttributes( data )
+        self._useAttributes(data)
 
-    def get_comment( self, id ):
-        assert isinstance( id, int ), id
-        headers, data = self._requester.requestAndCheck(
-            "GET",
-            "/gists/comments/" + str( id ),
-            None,
-            None
+    def get_comment(self, id):
+        """
+        :calls: `GET /gists/{gist_id}/comments/{id} <https://docs.github.com/en/rest/reference/gists#comments>`_
+        :param id: integer
+        :rtype: :class:`github.GistComment.GistComment`
+        """
+        assert isinstance(id, int), id
+        headers, data = self._requester.requestJsonAndCheck(
+            "GET", f"{self.url}/comments/{id}"
         )
-        return GistComment.GistComment( self._requester, data, completed = True )
+        return github.GistComment.GistComment(
+            self._requester, headers, data, completed=True
+        )
 
-    def get_comments( self ):
-        headers, data = self._requester.requestAndCheck(
-            "GET",
-            self.url + "/comments",
-            None,
-            None
-        )
-        return PaginatedList.PaginatedList(
-            GistComment.GistComment,
+    def get_comments(self):
+        """
+        :calls: `GET /gists/{gist_id}/comments <https://docs.github.com/en/rest/reference/gists#comments>`_
+        :rtype: :class:`github.PaginatedList.PaginatedList` of :class:`github.GistComment.GistComment`
+        """
+        return github.PaginatedList.PaginatedList(
+            github.GistComment.GistComment,
             self._requester,
-            headers,
-            data
+            f"{self.url}/comments",
+            None,
         )
 
-    def is_starred( self ):
-        status, headers, data = self._requester.requestRaw(
-            "GET",
-            self.url + "/star",
-            None,
-            None
-        )
+    def is_starred(self):
+        """
+        :calls: `GET /gists/{id}/star <https://docs.github.com/en/rest/reference/gists>`_
+        :rtype: bool
+        """
+        status, headers, data = self._requester.requestJson("GET", f"{self.url}/star")
         return status == 204
 
-    def reset_starred( self ):
-        headers, data = self._requester.requestAndCheck(
-            "DELETE",
-            self.url + "/star",
-            None,
-            None
+    def reset_starred(self):
+        """
+        :calls: `DELETE /gists/{id}/star <https://docs.github.com/en/rest/reference/gists>`_
+        :rtype: None
+        """
+        headers, data = self._requester.requestJsonAndCheck(
+            "DELETE", f"{self.url}/star"
         )
 
-    def set_starred( self ):
-        headers, data = self._requester.requestAndCheck(
-            "PUT",
-            self.url + "/star",
-            None,
-            None
-        )
+    def set_starred(self):
+        """
+        :calls: `PUT /gists/{id}/star <https://docs.github.com/en/rest/reference/gists>`_
+        :rtype: None
+        """
+        headers, data = self._requester.requestJsonAndCheck("PUT", f"{self.url}/star")
 
-    def _initAttributes( self ):
-        self._comments = GithubObject.NotSet
-        self._created_at = GithubObject.NotSet
-        self._description = GithubObject.NotSet
-        self._files = GithubObject.NotSet
-        self._fork_of = GithubObject.NotSet
-        self._forks = GithubObject.NotSet
-        self._git_pull_url = GithubObject.NotSet
-        self._git_push_url = GithubObject.NotSet
-        self._history = GithubObject.NotSet
-        self._html_url = GithubObject.NotSet
-        self._id = GithubObject.NotSet
-        self._public = GithubObject.NotSet
-        self._updated_at = GithubObject.NotSet
-        self._url = GithubObject.NotSet
-        self._user = GithubObject.NotSet
+    def _initAttributes(self):
+        self._comments = github.GithubObject.NotSet
+        self._comments_url = github.GithubObject.NotSet
+        self._commits_url = github.GithubObject.NotSet
+        self._created_at = github.GithubObject.NotSet
+        self._description = github.GithubObject.NotSet
+        self._files = github.GithubObject.NotSet
+        self._fork_of = github.GithubObject.NotSet
+        self._forks = github.GithubObject.NotSet
+        self._forks_url = github.GithubObject.NotSet
+        self._git_pull_url = github.GithubObject.NotSet
+        self._git_push_url = github.GithubObject.NotSet
+        self._history = github.GithubObject.NotSet
+        self._html_url = github.GithubObject.NotSet
+        self._id = github.GithubObject.NotSet
+        self._owner = github.GithubObject.NotSet
+        self._public = github.GithubObject.NotSet
+        self._updated_at = github.GithubObject.NotSet
+        self._url = github.GithubObject.NotSet
+        self._user = github.GithubObject.NotSet
 
-    def _useAttributes( self, attributes ):
-        if "comments" in attributes: # pragma no branch
-            assert attributes[ "comments" ] is None or isinstance( attributes[ "comments" ], int ), attributes[ "comments" ]
-            self._comments = attributes[ "comments" ]
-        if "created_at" in attributes: # pragma no branch
-            assert attributes[ "created_at" ] is None or isinstance( attributes[ "created_at" ], ( str, unicode ) ), attributes[ "created_at" ]
-            self._created_at = self._parseDatetime( attributes[ "created_at" ] )
-        if "description" in attributes: # pragma no branch
-            assert attributes[ "description" ] is None or isinstance( attributes[ "description" ], ( str, unicode ) ), attributes[ "description" ]
-            self._description = attributes[ "description" ]
-        if "files" in attributes: # pragma no branch
-            assert attributes[ "files" ] is None or all( isinstance( element, dict ) for element in attributes[ "files" ].itervalues() ), attributes[ "files" ]
-            self._files = None if attributes[ "files" ] is None else dict(
-                ( key, GistFile.GistFile( self._requester, element, completed = False ) )
-                for key, element in attributes[ "files" ].iteritems()
+    def _useAttributes(self, attributes):
+        if "comments" in attributes:  # pragma no branch
+            self._comments = self._makeIntAttribute(attributes["comments"])
+        if "comments_url" in attributes:  # pragma no branch
+            self._comments_url = self._makeStringAttribute(attributes["comments_url"])
+        if "commits_url" in attributes:  # pragma no branch
+            self._commits_url = self._makeStringAttribute(attributes["commits_url"])
+        if "created_at" in attributes:  # pragma no branch
+            self._created_at = self._makeDatetimeAttribute(attributes["created_at"])
+        if "description" in attributes:  # pragma no branch
+            self._description = self._makeStringAttribute(attributes["description"])
+        if "files" in attributes:  # pragma no branch
+            self._files = self._makeDictOfStringsToClassesAttribute(
+                github.GistFile.GistFile, attributes["files"]
             )
-        if "fork_of" in attributes: # pragma no branch
-            assert attributes[ "fork_of" ] is None or isinstance( attributes[ "fork_of" ], dict ), attributes[ "fork_of" ]
-            self._fork_of = None if attributes[ "fork_of" ] is None else Gist( self._requester, attributes[ "fork_of" ], completed = False )
-        if "forks" in attributes: # pragma no branch
-            assert attributes[ "forks" ] is None or all( isinstance( element, dict ) for element in attributes[ "forks" ] ), attributes[ "forks" ]
-            self._forks = None if attributes[ "forks" ] is None else [
-                Gist( self._requester, element, completed = False )
-                for element in attributes[ "forks" ]
-            ]
-        if "git_pull_url" in attributes: # pragma no branch
-            assert attributes[ "git_pull_url" ] is None or isinstance( attributes[ "git_pull_url" ], ( str, unicode ) ), attributes[ "git_pull_url" ]
-            self._git_pull_url = attributes[ "git_pull_url" ]
-        if "git_push_url" in attributes: # pragma no branch
-            assert attributes[ "git_push_url" ] is None or isinstance( attributes[ "git_push_url" ], ( str, unicode ) ), attributes[ "git_push_url" ]
-            self._git_push_url = attributes[ "git_push_url" ]
-        if "history" in attributes: # pragma no branch
-            assert attributes[ "history" ] is None or all( isinstance( element, dict ) for element in attributes[ "history" ] ), attributes[ "history" ]
-            self._history = None if attributes[ "history" ] is None else [
-                GistHistoryState.GistHistoryState( self._requester, element, completed = False )
-                for element in attributes[ "history" ]
-            ]
-        if "html_url" in attributes: # pragma no branch
-            assert attributes[ "html_url" ] is None or isinstance( attributes[ "html_url" ], ( str, unicode ) ), attributes[ "html_url" ]
-            self._html_url = attributes[ "html_url" ]
-        if "id" in attributes: # pragma no branch
-            assert attributes[ "id" ] is None or isinstance( attributes[ "id" ], ( str, unicode ) ), attributes[ "id" ]
-            self._id = attributes[ "id" ]
-        if "public" in attributes: # pragma no branch
-            assert attributes[ "public" ] is None or isinstance( attributes[ "public" ], bool ), attributes[ "public" ]
-            self._public = attributes[ "public" ]
-        if "updated_at" in attributes: # pragma no branch
-            assert attributes[ "updated_at" ] is None or isinstance( attributes[ "updated_at" ], ( str, unicode ) ), attributes[ "updated_at" ]
-            self._updated_at = self._parseDatetime( attributes[ "updated_at" ] )
-        if "url" in attributes: # pragma no branch
-            assert attributes[ "url" ] is None or isinstance( attributes[ "url" ], ( str, unicode ) ), attributes[ "url" ]
-            self._url = attributes[ "url" ]
-        if "user" in attributes: # pragma no branch
-            assert attributes[ "user" ] is None or isinstance( attributes[ "user" ], dict ), attributes[ "user" ]
-            self._user = None if attributes[ "user" ] is None else NamedUser.NamedUser( self._requester, attributes[ "user" ], completed = False )
+        if "fork_of" in attributes:  # pragma no branch
+            self._fork_of = self._makeClassAttribute(Gist, attributes["fork_of"])
+        if "forks" in attributes:  # pragma no branch
+            self._forks = self._makeListOfClassesAttribute(Gist, attributes["forks"])
+        if "forks_url" in attributes:  # pragma no branch
+            self._forks_url = self._makeStringAttribute(attributes["forks_url"])
+        if "git_pull_url" in attributes:  # pragma no branch
+            self._git_pull_url = self._makeStringAttribute(attributes["git_pull_url"])
+        if "git_push_url" in attributes:  # pragma no branch
+            self._git_push_url = self._makeStringAttribute(attributes["git_push_url"])
+        if "history" in attributes:  # pragma no branch
+            self._history = self._makeListOfClassesAttribute(
+                github.GistHistoryState.GistHistoryState, attributes["history"]
+            )
+        if "html_url" in attributes:  # pragma no branch
+            self._html_url = self._makeStringAttribute(attributes["html_url"])
+        if "id" in attributes:  # pragma no branch
+            self._id = self._makeStringAttribute(attributes["id"])
+        if "owner" in attributes:  # pragma no branch
+            self._owner = self._makeClassAttribute(
+                github.NamedUser.NamedUser, attributes["owner"]
+            )
+        if "public" in attributes:  # pragma no branch
+            self._public = self._makeBoolAttribute(attributes["public"])
+        if "updated_at" in attributes:  # pragma no branch
+            self._updated_at = self._makeDatetimeAttribute(attributes["updated_at"])
+        if "url" in attributes:  # pragma no branch
+            self._url = self._makeStringAttribute(attributes["url"])
+        if "user" in attributes:  # pragma no branch
+            self._user = self._makeClassAttribute(
+                github.NamedUser.NamedUser, attributes["user"]
+            )

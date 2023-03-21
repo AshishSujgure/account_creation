@@ -1,62 +1,104 @@
-# WARNING: this file is generated automaticaly.
-# Do not modify it manually, your work would be lost.
+############################ Copyrights and license ############################
+#                                                                              #
+# Copyright 2012 Vincent Jacques <vincent@vincent-jacques.net>                 #
+# Copyright 2012 Zearin <zearin@gonk.net>                                      #
+# Copyright 2013 AKFish <akfish@gmail.com>                                     #
+# Copyright 2013 Vincent Jacques <vincent@vincent-jacques.net>                 #
+# Copyright 2014 Vincent Jacques <vincent@vincent-jacques.net>                 #
+# Copyright 2016 Jannis Gebauer <ja.geb@me.com>                                #
+# Copyright 2016 Peter Buckley <dx-pbuckley@users.noreply.github.com>          #
+# Copyright 2018 Wan Liuyang <tsfdye@gmail.com>                                #
+# Copyright 2018 sfdye <tsfdye@gmail.com>                                      #
+#                                                                              #
+# This file is part of PyGithub.                                               #
+# http://pygithub.readthedocs.io/                                              #
+#                                                                              #
+# PyGithub is free software: you can redistribute it and/or modify it under    #
+# the terms of the GNU Lesser General Public License as published by the Free  #
+# Software Foundation, either version 3 of the License, or (at your option)    #
+# any later version.                                                           #
+#                                                                              #
+# PyGithub is distributed in the hope that it will be useful, but WITHOUT ANY  #
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS    #
+# FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more #
+# details.                                                                     #
+#                                                                              #
+# You should have received a copy of the GNU Lesser General Public License     #
+# along with PyGithub. If not, see <http://www.gnu.org/licenses/>.             #
+#                                                                              #
+################################################################################
 
-# Copyright 2012 Vincent Jacques
-# vincent@vincent-jacques.net
+import github.GithubObject
 
-# This file is part of PyGithub. http://vincent-jacques.net/PyGithub
 
-# PyGithub is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License
-# as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+class GistFile(github.GithubObject.NonCompletableGithubObject):
+    """
+    This class represents GistFiles
+    """
 
-# PyGithub is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
+    def __repr__(self):
+        return self.get__repr__({"filename": self._filename.value})
 
-# You should have received a copy of the GNU Lesser General Public License along with PyGithub.  If not, see <http://www.gnu.org/licenses/>.
-
-import GithubObject
-
-class GistFile( GithubObject.BasicGithubObject ):
     @property
-    def content( self ):
-        return self._NoneIfNotSet( self._content )
+    def content(self):
+        """
+        :type: string
+        """
+        return self._content.value
 
     @property
-    def filename( self ):
-        return self._NoneIfNotSet( self._filename )
+    def filename(self):
+        """
+        :type: string
+        """
+        return self._filename.value
 
     @property
-    def language( self ):
-        return self._NoneIfNotSet( self._language )
+    def language(self):
+        """
+        :type: string
+        """
+        return self._language.value
 
     @property
-    def raw_url( self ):
-        return self._NoneIfNotSet( self._raw_url )
+    def raw_url(self):
+        """
+        :type: string
+        """
+        return self._raw_url.value
 
     @property
-    def size( self ):
-        return self._NoneIfNotSet( self._size )
+    def size(self):
+        """
+        :type: integer
+        """
+        return self._size.value
 
-    def _initAttributes( self ):
-        self._content = GithubObject.NotSet
-        self._filename = GithubObject.NotSet
-        self._language = GithubObject.NotSet
-        self._raw_url = GithubObject.NotSet
-        self._size = GithubObject.NotSet
+    @property
+    def type(self):
+        """
+        :type: string
+        """
+        return self._type.value
 
-    def _useAttributes( self, attributes ):
-        if "content" in attributes: # pragma no branch
-            assert attributes[ "content" ] is None or isinstance( attributes[ "content" ], ( str, unicode ) ), attributes[ "content" ]
-            self._content = attributes[ "content" ]
-        if "filename" in attributes: # pragma no branch
-            assert attributes[ "filename" ] is None or isinstance( attributes[ "filename" ], ( str, unicode ) ), attributes[ "filename" ]
-            self._filename = attributes[ "filename" ]
-        if "language" in attributes: # pragma no branch
-            assert attributes[ "language" ] is None or isinstance( attributes[ "language" ], ( str, unicode ) ), attributes[ "language" ]
-            self._language = attributes[ "language" ]
-        if "raw_url" in attributes: # pragma no branch
-            assert attributes[ "raw_url" ] is None or isinstance( attributes[ "raw_url" ], ( str, unicode ) ), attributes[ "raw_url" ]
-            self._raw_url = attributes[ "raw_url" ]
-        if "size" in attributes: # pragma no branch
-            assert attributes[ "size" ] is None or isinstance( attributes[ "size" ], int ), attributes[ "size" ]
-            self._size = attributes[ "size" ]
+    def _initAttributes(self):
+        self._content = github.GithubObject.NotSet
+        self._filename = github.GithubObject.NotSet
+        self._language = github.GithubObject.NotSet
+        self._raw_url = github.GithubObject.NotSet
+        self._size = github.GithubObject.NotSet
+        self._type = github.GithubObject.NotSet
+
+    def _useAttributes(self, attributes):
+        if "content" in attributes:  # pragma no branch
+            self._content = self._makeStringAttribute(attributes["content"])
+        if "filename" in attributes:  # pragma no branch
+            self._filename = self._makeStringAttribute(attributes["filename"])
+        if "language" in attributes:  # pragma no branch
+            self._language = self._makeStringAttribute(attributes["language"])
+        if "raw_url" in attributes:  # pragma no branch
+            self._raw_url = self._makeStringAttribute(attributes["raw_url"])
+        if "size" in attributes:  # pragma no branch
+            self._size = self._makeIntAttribute(attributes["size"])
+        if "type" in attributes:  # pragma no branch
+            self._type = self._makeStringAttribute(attributes["type"])

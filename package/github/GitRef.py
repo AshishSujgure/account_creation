@@ -1,75 +1,106 @@
-# WARNING: this file is generated automaticaly.
-# Do not modify it manually, your work would be lost.
+############################ Copyrights and license ############################
+#                                                                              #
+# Copyright 2012 Vincent Jacques <vincent@vincent-jacques.net>                 #
+# Copyright 2012 Zearin <zearin@gonk.net>                                      #
+# Copyright 2013 AKFish <akfish@gmail.com>                                     #
+# Copyright 2013 Vincent Jacques <vincent@vincent-jacques.net>                 #
+# Copyright 2014 Vincent Jacques <vincent@vincent-jacques.net>                 #
+# Copyright 2016 Jannis Gebauer <ja.geb@me.com>                                #
+# Copyright 2016 Peter Buckley <dx-pbuckley@users.noreply.github.com>          #
+# Copyright 2018 Wan Liuyang <tsfdye@gmail.com>                                #
+# Copyright 2018 sfdye <tsfdye@gmail.com>                                      #
+#                                                                              #
+# This file is part of PyGithub.                                               #
+# http://pygithub.readthedocs.io/                                              #
+#                                                                              #
+# PyGithub is free software: you can redistribute it and/or modify it under    #
+# the terms of the GNU Lesser General Public License as published by the Free  #
+# Software Foundation, either version 3 of the License, or (at your option)    #
+# any later version.                                                           #
+#                                                                              #
+# PyGithub is distributed in the hope that it will be useful, but WITHOUT ANY  #
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS    #
+# FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more #
+# details.                                                                     #
+#                                                                              #
+# You should have received a copy of the GNU Lesser General Public License     #
+# along with PyGithub. If not, see <http://www.gnu.org/licenses/>.             #
+#                                                                              #
+################################################################################
 
-# Copyright 2012 Vincent Jacques
-# vincent@vincent-jacques.net
+import github.GithubObject
+import github.GitObject
 
-# This file is part of PyGithub. http://vincent-jacques.net/PyGithub
 
-# PyGithub is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License
-# as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+class GitRef(github.GithubObject.CompletableGithubObject):
+    """
+    This class represents GitRefs. The reference can be found here https://docs.github.com/en/rest/reference/git#references
+    """
 
-# PyGithub is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
+    def __repr__(self):
+        return self.get__repr__({"ref": self._ref.value})
 
-# You should have received a copy of the GNU Lesser General Public License along with PyGithub.  If not, see <http://www.gnu.org/licenses/>.
-
-import GithubObject
-
-import GitObject
-
-class GitRef( GithubObject.GithubObject ):
     @property
-    def object( self ):
-        self._completeIfNotSet( self._object )
-        return self._NoneIfNotSet( self._object )
+    def object(self):
+        """
+        :type: :class:`github.GitObject.GitObject`
+        """
+        self._completeIfNotSet(self._object)
+        return self._object.value
 
     @property
-    def ref( self ):
-        self._completeIfNotSet( self._ref )
-        return self._NoneIfNotSet( self._ref )
+    def ref(self):
+        """
+        :type: string
+        """
+        self._completeIfNotSet(self._ref)
+        return self._ref.value
 
     @property
-    def url( self ):
-        self._completeIfNotSet( self._url )
-        return self._NoneIfNotSet( self._url )
+    def url(self):
+        """
+        :type: string
+        """
+        self._completeIfNotSet(self._url)
+        return self._url.value
 
-    def delete( self ):
-        headers, data = self._requester.requestAndCheck(
-            "DELETE",
-            self.url,
-            None,
-            None
-        )
+    def delete(self):
+        """
+        :calls: `DELETE /repos/{owner}/{repo}/git/refs/{ref} <https://docs.github.com/en/rest/reference/git#references>`_
+        :rtype: None
+        """
+        headers, data = self._requester.requestJsonAndCheck("DELETE", self.url)
 
-    def edit( self, sha, force = GithubObject.NotSet ):
-        assert isinstance( sha, ( str, unicode ) ), sha
-        assert force is GithubObject.NotSet or isinstance( force, bool ), force
+    def edit(self, sha, force=github.GithubObject.NotSet):
+        """
+        :calls: `PATCH /repos/{owner}/{repo}/git/refs/{ref} <https://docs.github.com/en/rest/reference/git#references>`_
+        :param sha: string
+        :param force: bool
+        :rtype: None
+        """
+        assert isinstance(sha, str), sha
+        assert force is github.GithubObject.NotSet or isinstance(force, bool), force
         post_parameters = {
             "sha": sha,
         }
-        if force is not GithubObject.NotSet:
-            post_parameters[ "force" ] = force
-        headers, data = self._requester.requestAndCheck(
-            "PATCH",
-            self.url,
-            None,
-            post_parameters
+        if force is not github.GithubObject.NotSet:
+            post_parameters["force"] = force
+        headers, data = self._requester.requestJsonAndCheck(
+            "PATCH", self.url, input=post_parameters
         )
-        self._useAttributes( data )
+        self._useAttributes(data)
 
-    def _initAttributes( self ):
-        self._object = GithubObject.NotSet
-        self._ref = GithubObject.NotSet
-        self._url = GithubObject.NotSet
+    def _initAttributes(self):
+        self._object = github.GithubObject.NotSet
+        self._ref = github.GithubObject.NotSet
+        self._url = github.GithubObject.NotSet
 
-    def _useAttributes( self, attributes ):
-        if "object" in attributes: # pragma no branch
-            assert attributes[ "object" ] is None or isinstance( attributes[ "object" ], dict ), attributes[ "object" ]
-            self._object = None if attributes[ "object" ] is None else GitObject.GitObject( self._requester, attributes[ "object" ], completed = False )
-        if "ref" in attributes: # pragma no branch
-            assert attributes[ "ref" ] is None or isinstance( attributes[ "ref" ], ( str, unicode ) ), attributes[ "ref" ]
-            self._ref = attributes[ "ref" ]
-        if "url" in attributes: # pragma no branch
-            assert attributes[ "url" ] is None or isinstance( attributes[ "url" ], ( str, unicode ) ), attributes[ "url" ]
-            self._url = attributes[ "url" ]
+    def _useAttributes(self, attributes):
+        if "object" in attributes:  # pragma no branch
+            self._object = self._makeClassAttribute(
+                github.GitObject.GitObject, attributes["object"]
+            )
+        if "ref" in attributes:  # pragma no branch
+            self._ref = self._makeStringAttribute(attributes["ref"])
+        if "url" in attributes:  # pragma no branch
+            self._url = self._makeStringAttribute(attributes["url"])
